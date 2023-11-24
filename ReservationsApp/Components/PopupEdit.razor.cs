@@ -64,5 +64,20 @@ namespace ReservationsApp.Components
         {
             return Event.Status == CalendarEventStatus.Deleted;
         }
+
+        private bool HideEdit()
+        {
+            return Event.Status == CalendarEventStatus.Original;
+        }
+
+        private bool Hide()
+        {
+            return Event.Status == CalendarEventStatus.Modified;
+        }
+
+        private bool HideButtons()
+        {
+            return Event.Start < DateTime.Now;
+        }
     }
 }
