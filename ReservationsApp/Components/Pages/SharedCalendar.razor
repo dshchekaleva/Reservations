@@ -1,0 +1,20 @@
+﻿@page "/calendar/book"
+@using Microsoft.AspNetCore.WebUtilities
+@inject NavigationManager NavManager
+<div>
+<Calendar Id="candidate_calendar" showMode = "true"></Calendar>
+</div>
+@code
+{
+[Parameter]
+public Guid Code { get; set; }
+protected override void OnInitialized()
+{
+var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var _code))
+{
+var parameter = Convert.ToString(_code);
+Code = Guid.Parse(parameter);
+}
+}
+}

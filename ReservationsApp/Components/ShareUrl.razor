@@ -1,0 +1,16 @@
+﻿@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+<div>
+<button class="btn btn-primary" @onclick="CreateShareLink">Share</button>
+<p>
+<a href="@generatedUrl">@generatedUrl</a>
+</p>
+</div>
+@code {
+private Uri generatedUrl ;
+private void CreateShareLink()
+{
+var uri = $"/calendar/book?code={Guid.NewGuid()}";
+generatedUrl = NavigationManager.ToAbsoluteUri(uri);
+}
+}
