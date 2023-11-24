@@ -46,11 +46,14 @@
     [JSInvokable]
     public async Task CalendarSellClicked(string identifier)
     {
+        var date = DateTime.Parse(identifier);
         var state = await provider.GetAuthenticationStateAsync();
         var user = state.User;
         var userId = manager.GetUserId(user);
-        var date = DateTime.Parse(identifier);
-        await popupAdd.ShowPopupAsync(date, userId);
+        if (!ShouldNotShowPopup(date, userId))
+        {
+            await popupAdd.ShowPopupAsync(date, userId);
+        }
     }
 
     [JSInvokable]
@@ -69,5 +72,11 @@
     {
         Events = await service.GetCalendarEvents(start, end, showMode);
         return Events;
+    }
+
+    private bool ShouldNotShowPopup(DateTime date, string userId)
+    {
+        return date < DateTime.Today || date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday
+        || service.UserHasReservation(userId);
     }
 }

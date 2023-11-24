@@ -8,5 +8,6 @@ namespace ReservationsApp.Services
         Task<string> AddReservation(string userId, DateTime start);
         void RemoveReservations(Guid eventIds);
         void UpdateReservations(CalendarEvent events);
+        bool UserHasReservation(string userId);
     }
 }

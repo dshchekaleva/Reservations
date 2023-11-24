@@ -30,6 +30,12 @@ namespace ReservationsApp.Services
             return reservation.Id.ToString();
         }
 
+        public bool UserHasReservation(string userId)
+        {
+            var events = _reservationContext.Reservations.Where(x=>x.UserId.Equals(userId));
+            return events.Any();
+        }
+
         public async Task<List<CalendarEvent>> GetCalendarEvents(DateTime startDate, DateTime endDate, bool showMode)
         {
             var events = await _reservationContext.Reservations.Where(x => x.ReservationStart > startDate && x.ReservationStart < endDate).ToListAsync();
