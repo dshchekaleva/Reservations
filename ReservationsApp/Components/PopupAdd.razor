@@ -1,17 +1,18 @@
 ﻿<dialog @ref="@dialogElement">
- <div>
-<label for="hours">Choose an hour to add reservation:</label>
+    <label>@validationMessage</label>
+    <div>
+        <label for="hours">Choose an hour to add reservation:</label>
 
-<select @bind="@hour" name="hours" id="hours">
-<option value=""></option>
-@foreach (var unbookedHour in AvailableHours)
-{
-<option value="@unbookedHour">@unbookedHour</option>
-}
-</select>
-</div>
-<div>
-<button class="btn btn-primary" @onclick="SaveAndClosePopupAsync">Save</button>
-<button class="btn btn-danger" @onclick="ClosePopupAsync">Cancel</button>
-</div>
+        <select @bind="@hour" name="hours" id="hours">
+            <option value=""></option>
+            @foreach (var unbookedHour in AvailableHours)
+            {
+                <option value="@unbookedHour">@unbookedHour</option>
+            }
+        </select>
+    </div>
+    <div>
+        <button class="btn btn-primary" @onclick="SaveAndClosePopupAsync">Save</button>
+        <button class="btn btn-danger" @onclick="ClosePopupAsync">Cancel</button>
+    </div>
 </dialog>
