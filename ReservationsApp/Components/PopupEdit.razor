@@ -1,21 +1,18 @@
 ﻿<dialog @ref="@dialogElement">
-<div>
-<div id="@Event.Identifier" hidden="@HideEvent()"> 
-<p hidden="@HideEvent()">bzzz</p>
-<InputDate @bind-Value = "date"></InputDate>
-<select @bind = "@hour" name="hours" id="hours">
-<option value="@Event.Start.Hour">@Event.Start.Hour</option>
-@foreach (var unbookedHour in AvailableHours)
-{
-<option value="@unbookedHour">@unbookedHour</option>
-}
-</select>
-@Event.Title - @Event.Start.Hour-@Event.End?.Hour  <button class="btn btn-link" @onclick="() => EditEvent()">Edit</button>
-<button class="btn btn-link" @onclick="() => DeleteEvent()">Delete</button>
-</div>
-</div>
-<div>
-<button class="btn btn-primary" @onclick="SaveAndClosePopupAsync">Save</button>
-<button class="btn btn-danger" @onclick="ClosePopupAsync">Cancel</button>
-</div>
+    <div id="@Event.Identifier" hidden="@HideEvent()">
+        <InputDate @bind-Value="date"></InputDate>
+        <select @bind="@hour" name="hours" id="hours">
+            <option value="@Event.Start.Hour">@Event.Start.Hour</option>
+            @foreach (var unbookedHour in AvailableHours)
+            {
+                <option value="@unbookedHour">@unbookedHour</option>
+            }
+        </select>
+        @Event.Title - @Event.Start.Hour-@Event.End?.Hour  <button class="btn btn-link" @onclick="() => EditEvent()">Edit</button>
+        <button class="btn btn-link" @onclick="() => DeleteEvent()">Delete</button>
+    </div>
+    <div>
+        <button class="btn btn-primary" @onclick="SaveAndClosePopupAsync">Save</button>
+        <button class="btn btn-danger" @onclick="ClosePopupAsync">Cancel</button>
+    </div>
 </dialog>

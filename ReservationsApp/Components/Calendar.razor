@@ -16,58 +16,58 @@
 </PopupEdit>
 
 @code {
-string _id;
-private PopupAdd popupAdd;
-private PopupEdit popupEdit;
+    string _id;
+    private PopupAdd popupAdd;
+    private PopupEdit popupEdit;
 
-[Parameter]
-public string Id
-{
-get => _id ?? $"Calendar_{uid}";
-set => _id = value;
-}
+    [Parameter]
+    public string Id
+    {
+        get => _id ?? $"Calendar_{uid}";
+        set => _id = value;
+    }
 
-[Parameter]
-public bool showMode { get; set; }
+    [Parameter]
+    public bool showMode { get; set; }
 
-[Parameter]
-public List<CalendarEvent> Events { get; set; } = new();
+    [Parameter]
+    public List<CalendarEvent> Events { get; set; } = new();
 
 
-readonly string uid = Guid.NewGuid().ToString().ToLower().Replace("-", "");
-protected override async Task OnAfterRenderAsync(bool firstRender)
-{
-if (showMode)
-await JSRuntime.InvokeVoidAsync("initShow", DotNetObjectReference.Create(this));
-else
-await JSRuntime.InvokeVoidAsync("init", DotNetObjectReference.Create(this));
-}
+    readonly string uid = Guid.NewGuid().ToString().ToLower().Replace("-", "");
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (showMode)
+            await JSRuntime.InvokeVoidAsync("initShow", DotNetObjectReference.Create(this));
+        else
+            await JSRuntime.InvokeVoidAsync("init", DotNetObjectReference.Create(this));
+    }
 
-[JSInvokable]
-public async Task CalendarSellClicked(string identifier)
-{
-var state = await provider.GetAuthenticationStateAsync();
-var user = state.User;
-var userId = manager.GetUserId(user);
- var date = DateTime.Parse(identifier);
-await popupAdd.ShowPopupAsync(date, userId);
-}
+    [JSInvokable]
+    public async Task CalendarSellClicked(string identifier)
+    {
+        var state = await provider.GetAuthenticationStateAsync();
+        var user = state.User;
+        var userId = manager.GetUserId(user);
+        var date = DateTime.Parse(identifier);
+        await popupAdd.ShowPopupAsync(date, userId);
+    }
 
-[JSInvokable]
-public async Task CalendarEventClicked(string identifier)
-{
-var eventToEdit = Events.First(x => x.Identifier == identifier);
-await popupEdit.ShowPopupAsync(eventToEdit);
-}
- 
-protected async Task Save()
-{
-}
+    [JSInvokable]
+    public async Task CalendarEventClicked(string identifier)
+    {
+        var eventToEdit = Events.First(x => x.Identifier == identifier);
+        await popupEdit.ShowPopupAsync(eventToEdit);
+    }
 
-[JSInvokable]
-public async Task<List<CalendarEvent>> GetEvents(DateTime start, DateTime end)
-{
-Events = await service.GetCalendarEvents(start, end, showMode);
-return Events;
-}
+    protected async Task Save()
+    {
+    }
+
+    [JSInvokable]
+    public async Task<List<CalendarEvent>> GetEvents(DateTime start, DateTime end)
+    {
+        Events = await service.GetCalendarEvents(start, end, showMode);
+        return Events;
+    }
 }
